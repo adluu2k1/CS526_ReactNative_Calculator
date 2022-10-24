@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity as Button } from 'react-native';
+import { Input } from 'react-native-elements';
 
 const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654ebdd1e037503.jpeg" };
+//const image = "";
 
 const Calculator = () => {
   const [text, setText] = useState('');
@@ -27,7 +28,7 @@ const Calculator = () => {
         </View>
       </View>
       <View style ={{display: 'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-        <TouchableOpacity style={{
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -38,8 +39,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>√x      </Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -49,8 +50,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^2</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -60,8 +61,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^y</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -71,8 +72,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>log(x)</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -82,8 +83,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>ln(x)</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -93,8 +94,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>log(y)(x)</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -104,8 +105,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>sin(x)</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -115,8 +116,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>cos(x)</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -128,8 +129,8 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>tan(x)</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
+        </Button> 
+        <Button style={{
                             borderWidth:2,
                             borderColor:'white',
                             borderRadius: 5,
@@ -140,21 +141,22 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>clear</Text>
-        </TouchableOpacity> 
+        </Button> 
       </View>
-      <Button title="Calculate"
-        buttonStyle = {{
-          borderWidth: 2,
-          borderColor:'white',
-          borderRadius:30,
-          backgroundColor: 'rgba(255,255,204,1)',
-          marginBottom: 20
-        }}
-        containerStyle={{
-          width: 250,
-          marginHorizontal: 80,
-        }}
-        titleStyle={{ fontWeight: 'bold', color:'black' }} />
+      <View style={{padding: 10}}>
+        <Button style = {{
+            borderWidth: 2,
+            borderColor:'white',
+            borderRadius:5,
+            backgroundColor: 'gray',
+            height: 70,
+            width: 60,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>Calculate</Text>
+        </Button>
+      </View>
       <View style = {{
           backgroundColor: 'rgba(204,255,204,1)',
           borderRadius: 15,
