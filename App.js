@@ -3,7 +3,12 @@ import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity, S
 import { Button, Input } from 'react-native-elements';
 
 const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654ebdd1e037503.jpeg" };
-
+constructor() {
+  super();
+  this.state = {
+    content: true
+  }
+}
 const Calculator = () => {
   const [text, setText] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
