@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity as Button } from 'react-native';
+import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity as Button, Switch } from 'react-native';
 import { Input } from 'react-native-elements';
 
 const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654ebdd1e037503.jpeg" };
-//const image = "";
 
 const Calculator = () => {
   const [text, setText] = useState('');
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <ImageBackground source={image} resizeMode= 'cover' style = {styles.image}>
     
@@ -156,6 +157,15 @@ const Calculator = () => {
           }}>
           <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>Calculate</Text>
         </Button>
+      </View>
+      <View style = {{marginBottom: 20}}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
       </View>
       <View style = {{
           backgroundColor: 'rgba(204,255,204,1)',
