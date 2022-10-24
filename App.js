@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity, Switch, Platform } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
 const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654ebdd1e037503.jpeg" };
 
 const Calculator = () => {
   const [text, setText] = useState('');
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <ImageBackground source={image} resizeMode= 'cover' style = {styles.image}>
     
@@ -37,18 +39,7 @@ const Calculator = () => {
                             alignItems: 'center',
                             justifyContent: 'center'
                             }}>
-            <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>√x      </Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={{
-                            borderWidth:2,
-                            borderColor:'white',
-                            borderRadius: 5,
-                            backgroundColor: 'rgba(64,64,64,64)',
-                            height: 50,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                            }}>
-            <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^2</Text>
+            <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>√x </Text>
         </TouchableOpacity> 
         <TouchableOpacity style={{
                             borderWidth:2,
@@ -148,13 +139,22 @@ const Calculator = () => {
           borderColor:'white',
           borderRadius:30,
           backgroundColor: 'rgba(255,255,204,1)',
-          marginBottom: 20
+          marginBottom: 40,
         }}
         containerStyle={{
           width: 250,
           marginHorizontal: 80,
         }}
         titleStyle={{ fontWeight: 'bold', color:'black' }} />
+      <View style = {{marginBottom: 20}}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+      </View>
       <View style = {{
           backgroundColor: 'rgba(204,255,204,1)',
           borderRadius: 15,
