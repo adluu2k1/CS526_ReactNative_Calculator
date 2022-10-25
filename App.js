@@ -6,27 +6,26 @@ const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654e
 
 const Calculator = () => {
   const [text, setText] = useState('');
+  const [input, setInput] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  let textInput = null;
   return (
     <ImageBackground source={image} resizeMode= 'cover' style = {styles.image}>
     
-      <View style={{padding: 10, marginTop: 50}}>
-        <View style = {{
-          backgroundColor: 'rgba(204,255,204,1)',
-          borderRadius: 10,}}>
-          <TextInput
-            style={{height: 40, fontSize: 20,}}
-            placeholder="What to calculate?"
-            onChangeText={newText => {
-              setText(eval(newText));
-            }}
-            defaultValue={text}
-          />
-          <Text style={{padding: 10, fontSize: 42}}>
-            result
-          </Text>
-        </View>
+      <View style={{padding: 10, marginTop: 50, backgroundColor: 'rgba(204,255,204,1)', borderRadius: 10,}}>
+        <TextInput
+          ref={(thisObject) => { textInput = thisObject}}
+          style={{height: 40, fontSize: 20}}
+          placeholder="What to calculate?"
+          onChangeText={(NewText) => {
+            setInput(NewText);
+          }}
+          value={input}>
+        </TextInput>
+        <Text style={{padding: 10, fontSize: 42}}>
+        {text}
+        </Text>
       </View>
       <View style ={{display: 'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
         <Button style={{
@@ -38,7 +37,11 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
+                            }}
+                onPress={() => {
+                  setInput(input + "√(");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>√x      </Text>
         </Button> 
         <Button style={{
@@ -49,7 +52,11 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
+                            }}
+                onPress={() => {
+                  setInput(input + "√(");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^2</Text>
         </Button> 
         <Button style={{
@@ -60,6 +67,10 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
+                            }}
+                            onPress={() => {
+                              setInput(input + "√(");
+                              textInput.focus();
                             }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^y</Text>
         </Button> 
@@ -144,16 +155,20 @@ const Calculator = () => {
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>clear</Text>
         </Button> 
       </View>
-      <View style={{padding: 10}}>
+      <View style={{padding: 10, alignItems: 'center', marginTop: 20}}>
         <Button style = {{
             borderWidth: 2,
             borderColor:'white',
             borderRadius:5,
-            backgroundColor: 'gray',
-            height: 70,
-            width: 60,
+            backgroundColor: 'blue',
+            height: 50,
+            width: 100,
             alignItems: 'center',
             justifyContent: 'center'
+          }}
+          onPress={() => {
+            var s_calc = input.replace("√(", "Math.sqrt(")
+            setText(eval(s_calc));
           }}>
           <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>Calculate</Text>
         </Button>
