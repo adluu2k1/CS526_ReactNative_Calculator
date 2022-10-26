@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity as Button, SafeAreaView, VirtualizedList, StatusBar } from 'react-native';
 import { Input } from 'react-native-elements';
 
@@ -11,9 +11,9 @@ const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654e
 const DATA = [];
 const getItem = (data, index) => ({
   id: Math.random().toString(12).substring(0),
-  title: `Math ${index+1}\nResult: ${index+1}`, // display các phép tính vào history
+  title: `${data[index][0]}\n${data[index][1]}`, // display các phép tính vào history
 });
-const getItemCount = (data) => 3; // count số lượng container history
+const getItemCount = (data) => DATA.length; // count số lượng container history
 const Item = ({title}) => (
   <View style={stylesList.item}>
     <Text style={stylesList.title}>{title}</Text>
@@ -25,7 +25,13 @@ const Item = ({title}) => (
 const Calculator = () => {
   const [text, setText] = useState('');
   const [input, setInput] = useState('');
-  const [shouldShow, setShouldShow] = useState(true); // hide & show component
+  const [shouldShow, setShouldShow] = useState(false); // hide & show component
+  useEffect(() => {
+    if (input != '' && text != '') {
+      DATA.push([input, text]);
+      console.log(DATA);
+    }
+  }, [text]);
   let textInput = null;
   return (
     <ImageBackground source={image} resizeMode= 'cover' style = {styles.image}>
@@ -205,6 +211,7 @@ const Calculator = () => {
             justifyContent: 'center'
           }}
           onPress={() => {
+            // Calculate
             let s_calc = input.replace("√(", "Math.sqrt(");
             s_calc = s_calc.replace("^", "**");
             s_calc = s_calc.replace("ln(", "Math.log(");
