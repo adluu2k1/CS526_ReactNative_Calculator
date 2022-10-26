@@ -18,9 +18,10 @@ const Calculator = () => {
   const [displayDATA, setDisplayData] = useState(DATA);
   const [searchInput, setSearchInput] = useState('');
 
+  // Các hàm xử lý khi giá trị các biến thay đổi
   useEffect(() => {
     if (input != '' && text != '') {
-      DATA.push([input, text]);
+      DATA.push([input.replace(/ /g, '').toLowerCase(), text]);
       console.log(DATA);
     }
   }, [text]);
@@ -33,6 +34,7 @@ const Calculator = () => {
     }
   }, [searchInput]);
 
+  // Controls references declaration
   let textInput = null;
 
   // Content bên trong container history của các phép tính
@@ -86,8 +88,7 @@ const Calculator = () => {
           </Text>
         </View>
       </View>
-      
-      {/* màn hình nhập phép tính và hiển thị kết quả */}
+
       {/* các nút phép tính khoa học */}
       <View style ={{display: 'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 10}}>
         <Button style={{
@@ -245,19 +246,28 @@ const Calculator = () => {
             justifyContent: 'center'
           }}
           onPress={() => {
+            // Transform input into JS syntax string
+            let s_calc = input.replace(/ /g, '');
+            s_calc = s_calc.replace(/√\(/gi, "Math.sqrt(");
+            s_calc = s_calc.replace(/\^/g, "**");
+            s_calc = s_calc.replace(/log/gi, "log");
+            s_calc = s_calc.replace(/ln\(/gi, "Math.log(");
+            s_calc = s_calc.replace(/sin\(/gi, "Math.sin(");
+            s_calc = s_calc.replace(/cos\(/gi, "Math.cos(");
+            s_calc = s_calc.replace(/tan\(/gi, "Math.tan(");
+
             // Calculate
-            let s_calc = input.replace("√(", "Math.sqrt(");
-            s_calc = s_calc.replace("^", "**");
-            s_calc = s_calc.replace("ln(", "Math.log(");
-            s_calc = s_calc.replace("sin(", "Math.sin(");
-            s_calc = s_calc.replace("cos(", "Math.cos(");
-            s_calc = s_calc.replace("tan(", "Math.tan(");
-            setText(eval(s_calc).toString());
+            try {
+              setText(eval(s_calc).toString());
+            }
+            catch(error) {
+              setText("Error");
+              console.log(error);
+            }
           }}>
           <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>Calculate</Text>
         </Button>
       </View>
-      {/* các nút phép tính khoa học */}
       
       {/* HISTORY */}
       
@@ -288,7 +298,7 @@ const Calculator = () => {
               label="HISTORY"
               placeholder='Search'
               onChangeText={(SearchText) => {
-                setSearchInput(SearchText);
+                setSearchInput(SearchText.replace(/ /g, '').toLowerCase());
               }}
             />
             
