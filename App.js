@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Text, TextInput, View, ImageBackground, StyleSheet, TouchableOpacity as Button, SafeAreaView, VirtualizedList, StatusBar } from 'react-native';
 import { Input } from 'react-native-elements';
 
+function log(num, base=10) {
+  return Math.log(num) / Math.log(base);
+}
 
 const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654ebdd1e037503.jpeg" };
 // Content bên trong container history của các phép tính
@@ -75,7 +78,7 @@ const Calculator = () => {
                             justifyContent: 'center'
                             }}
                 onPress={() => {
-                  setInput(input + "√(");
+                  setInput(input + "^2");
                   textInput.focus();
                 }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^2</Text>
@@ -89,10 +92,10 @@ const Calculator = () => {
                             alignItems: 'center',
                             justifyContent: 'center'
                             }}
-                            onPress={() => {
-                              setInput(input + "√(");
-                              textInput.focus();
-                            }}>
+                onPress={() => {
+                  setInput(input + "^");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^y</Text>
         </Button> 
         <Button style={{
@@ -103,8 +106,12 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
-            <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>log(x)</Text>
+                            }}
+                onPress={() => {
+                  setInput(input + "log(");
+                  textInput.focus();
+                }}>
+            <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>log(x,b)</Text>
         </Button> 
         <Button style={{
                             borderWidth:2,
@@ -114,7 +121,11 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
+                            }}
+                onPress={() => {
+                  setInput(input + "ln(");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>ln(x)</Text>
         </Button> 
         <Button style={{
@@ -125,18 +136,11 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
-            <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>log(y)(x)</Text>
-        </Button> 
-        <Button style={{
-                            borderWidth:2,
-                            borderColor:'white',
-                            borderRadius: 5,
-                            backgroundColor: 'rgba(64,64,64,64)',
-                            height: 50,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                            }}>
+                            }}
+                onPress={() => {
+                  setInput(input + "sin(");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>sin(x)</Text>
         </Button> 
         <Button style={{
@@ -147,7 +151,11 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
+                            }}
+                onPress={() => {
+                  setInput(input + "cos(");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>cos(x)</Text>
         </Button> 
         <Button style={{
@@ -160,7 +168,11 @@ const Calculator = () => {
                             height: 50,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
+                            }}
+                onPress={() => {
+                  setInput(input + "tan(");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>tan(x)</Text>
         </Button> 
         <Button style={{
@@ -172,7 +184,12 @@ const Calculator = () => {
                             width: 60,
                             alignItems: 'center',
                             justifyContent: 'center'
-                            }}>
+                            }}
+                onPress={() => {
+                  setInput("");
+                  setText("");
+                  textInput.focus();
+                }}>
             <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>clear</Text>
         </Button> 
       </View>
@@ -188,7 +205,12 @@ const Calculator = () => {
             justifyContent: 'center'
           }}
           onPress={() => {
-            var s_calc = input.replace("√(", "Math.sqrt(")
+            let s_calc = input.replace("√(", "Math.sqrt(");
+            s_calc = s_calc.replace("^", "**");
+            s_calc = s_calc.replace("ln(", "Math.log(");
+            s_calc = s_calc.replace("sin(", "Math.sin(");
+            s_calc = s_calc.replace("cos(", "Math.cos(");
+            s_calc = s_calc.replace("tan(", "Math.tan(");
             setText(eval(s_calc));
           }}>
           <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>Calculate</Text>
