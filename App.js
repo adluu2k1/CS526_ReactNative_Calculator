@@ -273,37 +273,38 @@ const Calculator = () => {
       </SafeAreaView>
       
     </ImageBackground>
-    );
-  };
-  // Các thuộc tính của background
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    image: {
-      flex: 1,
-    },
-  });
-  // Các thuộc tính của box history
-  const stylesList = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight,
-    },
-    item: {
-      backgroundColor: 'black',
-      borderRadius: 20,
-      height: 150,
-      justifyContent: 'center',
-      marginVertical: 8,
-      marginHorizontal: 16,
-      padding: 20,
-    },
-    title: {
-      fontSize: 32,
-      color: 'white',
-    },
-  });
-  
-  
-  export default Calculator;
+  );
+};
+
+// Các thuộc tính của background
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+  },
+});
+// Các thuộc tính của box history
+const stylesList = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight,
+  },
+  item: {
+    backgroundColor: 'black',
+    borderRadius: 20,
+    height: 150,
+    justifyContent: 'center',
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    color: 'white',
+  },
+});
+
+
+export default Calculator;
