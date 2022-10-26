@@ -4,35 +4,66 @@ import { Input } from 'react-native-elements';
 
 function log(num, base=10) {
   return Math.log(num) / Math.log(base);
-}
+} 
 
-const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654ebdd1e037503.jpeg" };
-// Content bên trong container history của các phép tính
 const DATA = [];
-const getItem = (data, index) => ({
-  id: Math.random().toString(12).substring(0),
-  title: `${data[index][0]}\n${data[index][1]}`, // display các phép tính vào history
-});
-const getItemCount = (data) => DATA.length; // count số lượng container history
-const Item = ({title}) => (
-  <View style={stylesList.item}>
-    <Text style={stylesList.title}>{title}</Text>
-  </View>
-);
-// Content bên trong container history của các phép tính
-  
-  
+
 const Calculator = () => {
+
+  const image = { uri: "https://mobimg.b-cdn.net/v3/fetch/67/674d9f64c8a3c0110654ebdd1e037503.jpeg" };
+
   const [text, setText] = useState('');
   const [input, setInput] = useState('');
   const [shouldShow, setShouldShow] = useState(false); // hide & show component
+  const [displayDATA, setDisplayData] = useState(DATA);
+  const [searchInput, setSearchInput] = useState('');
+
   useEffect(() => {
     if (input != '' && text != '') {
       DATA.push([input, text]);
       console.log(DATA);
     }
   }, [text]);
+  useEffect(() => {
+    if (searchInput.length == 0) {
+      setDisplayData(DATA);
+    }
+    else {
+      setDisplayData(DATA.filter(item => item[0].includes(searchInput) || item[1].includes(searchInput)));
+    }
+  }, [searchInput]);
+
   let textInput = null;
+
+  // Content bên trong container history của các phép tính
+  const getItem = (data, index) => ({
+    id: Math.random().toString(12).substring(0),
+    title: `${data[index][0]}\n${data[index][1]}`, // display các phép tính vào history
+  });
+  const getItemCount = (data) => data.length; // count số lượng container history
+
+  const Item = ({title}) => {
+    const arr_text = title.split(searchInput);
+    let last_text = arr_text.pop();
+    return (
+      <View style={stylesList.item}>
+        <Text>{arr_text.map(substr => {
+          if (searchInput != '') {
+            return (
+              <Text style={stylesList.title}>{substr}
+                <Text style={stylesList.highlight}>{searchInput}</Text>
+              </Text>);
+          }
+          else {
+            return <Text style={stylesList.title}>{substr}</Text>;
+          }
+          })}<Text style={stylesList.title}>{last_text}</Text>
+        </Text>
+      </View>
+    )
+  }
+
+  // render
   return (
     <ImageBackground source={image} resizeMode= 'cover' style = {styles.image}>
     
@@ -58,7 +89,7 @@ const Calculator = () => {
       
       {/* màn hình nhập phép tính và hiển thị kết quả */}
       {/* các nút phép tính khoa học */}
-      <View style ={{display: 'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+      <View style ={{display: 'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 10}}>
         <Button style={{
             borderWidth:2,
             borderColor:'white',
@@ -73,7 +104,7 @@ const Calculator = () => {
             setInput(input + "√(");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>√x</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  √x  </Text>
         </Button> 
         <Button style={{
             borderWidth:2,
@@ -88,7 +119,7 @@ const Calculator = () => {
             setInput(input + "^2");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^2</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  (x)^2  </Text>
         </Button> 
         <Button style={{
             borderWidth:2,
@@ -103,7 +134,7 @@ const Calculator = () => {
             setInput(input + "^");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>(x)^y</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  (x)^y  </Text>
         </Button> 
         <Button style={{
             borderWidth:2,
@@ -118,7 +149,7 @@ const Calculator = () => {
             setInput(input + "log(");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>log(x,b)</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  log(x,b)  </Text>
         </Button> 
         <Button style={{
             borderWidth:2,
@@ -133,7 +164,7 @@ const Calculator = () => {
             setInput(input + "ln(");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>ln(x)</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  ln(x)  </Text>
         </Button> 
         <Button style={{
             borderWidth:2,
@@ -148,7 +179,7 @@ const Calculator = () => {
             setInput(input + "sin(");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>sin(x)</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  sin(x)  </Text>
         </Button> 
         <Button style={{
             borderWidth:2,
@@ -163,7 +194,7 @@ const Calculator = () => {
             setInput(input + "cos(");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>cos(x)</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  cos(x)  </Text>
         </Button> 
         <Button style={{
             borderWidth:2,
@@ -180,7 +211,7 @@ const Calculator = () => {
             setInput(input + "tan(");
             textInput.focus();
           }}>
-          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>tan(x)</Text>
+          <Text style = {{textAlign: 'center', fontSize: 18, color: 'white'}}>  tan(x)  </Text>
         </Button> 
       </View>
       <View style={{justifyContent: 'center', marginTop: 20, display: 'flex', flexDirection:'row', flexWrap: 'wrap'}}>
@@ -221,7 +252,7 @@ const Calculator = () => {
             s_calc = s_calc.replace("sin(", "Math.sin(");
             s_calc = s_calc.replace("cos(", "Math.cos(");
             s_calc = s_calc.replace("tan(", "Math.tan(");
-            setText(eval(s_calc));
+            setText(eval(s_calc).toString());
           }}>
           <Text style = {{textAlign: 'center', fontSize: 18, color: 'white', fontWeight:'bold'}}>Calculate</Text>
         </Button>
@@ -230,14 +261,14 @@ const Calculator = () => {
       
       {/* HISTORY */}
       
-      <SafeAreaView style = {{flex: 1, alignItems: 'center'}}>
+      <SafeAreaView style = {{flex: 1}}>
         <Button 
           style = {{
             borderWidth: 2,
             borderColor:'white',
             borderRadius:5,
-            backgroundColor: 'gray',
-            marginTop: 50,
+            backgroundColor: 'rgba(64,64,64,64)',
+            marginTop: 30,
             marginBottom: 20,
             height: 50,
             width: 200,
@@ -253,20 +284,30 @@ const Calculator = () => {
               backgroundColor: 'rgba(204,255,204,1)',
               borderRadius: 15,
             }}>
-            <Input label="HISTORY" placeholder='Search' />
+            <Input
+              label="HISTORY"
+              placeholder='Search'
+              onChangeText={(SearchText) => {
+                setSearchInput(SearchText);
+              }}
+            />
             
             {/* list các container lịch sử các phép tính đã tính */}
-            
-            <SafeAreaView style = {stylesList.container}>
-              <VirtualizedList
-                data={DATA}
-                initialNumToRender={4}
-                renderItem={({ item }) => <Item title={item.title} />}
-                keyExtractor={item => item.key}
-                getItemCount = {getItemCount}
-                getItem = {getItem}
-              />
-            </SafeAreaView>
+
+            <View>
+            { (displayDATA.length != 0) ? (
+              <SafeAreaView style = {stylesList.container}>
+                <VirtualizedList
+                  data={displayDATA}
+                  renderItem={({ item }) => <Item title={item.title} />}
+                  getItemCount = {getItemCount}
+                  getItem = {getItem}
+                  // initialNumToRender={4}
+                  // keyExtractor={item => item.key}
+                />
+              </SafeAreaView>) : null
+            }
+            </View>
           </View>) : null
         }
         </View>
@@ -304,7 +345,10 @@ const stylesList = StyleSheet.create({
     fontSize: 32,
     color: 'white',
   },
+  highlight: {
+    fontSize: 32,
+    color: 'red',
+  },
 });
-
 
 export default Calculator;
